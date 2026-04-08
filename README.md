@@ -1,6 +1,11 @@
-# App Surgeon
+<p align="center">
+  <img src="assets/futron-icon.png" width="120" alt="FUTRON">
+</p>
 
-**Reverse-engineer, customize, and add features to any installed application.**
+<h1 align="center">App Surgeon</h1>
+<p align="center"><strong>by FUTRON Prime</strong></p>
+
+<p align="center">Reverse-engineer, customize, and add features to any installed application.</p>
 
 Patches compiled code, injects custom UI, modifies configs, and adds functionality — all with rollback safety. Works with Claude Code, OpenClaw, or any LLM-powered coding assistant.
 
