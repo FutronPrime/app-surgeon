@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="assets/futron-icon.png" width="120" alt="FUTRON">
+  <img src="assets/app-surgeon-logo.png" width="200" alt="App Surgeon">
 </p>
 
 <h1 align="center">App Surgeon</h1>
-<p align="center"><strong>by ☰ FutЯøn ☰</strong></p>
+<p align="center"><strong>by <a href="https://github.com/FutronPrime">☰ FutЯøn ☰</a> · <a href="https://futronindustries.com">Futron Industries</a></strong></p>
 
 <p align="center">Reverse-engineer, customize, and add features to any installed application.</p>
 
