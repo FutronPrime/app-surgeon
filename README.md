@@ -5,13 +5,14 @@
 <h1 align="center">App Surgeon</h1>
 <p align="center"><strong>by <a href="https://github.com/FutronPrime">☰ FutЯøn ☰</a> · <a href="https://futronindustries.com">Futron Industries</a></strong></p>
 
-<p align="center">Reverse-engineer, customize, and add features to any installed application.</p>
+<p align="center">Diagnose, fix, reverse-engineer, customize, and add features to any installed application.</p>
 
-Patches compiled code, injects custom UI, modifies configs, and adds functionality — all with rollback safety. Works with Claude Code, OpenClaw, or any LLM-powered coding assistant.
+The AI-powered application toolkit that **troubleshoots crashes**, patches compiled code, injects custom UI, modifies configs, and adds functionality — all with proactive web research, self-evolving learning, and rollback safety. Works with Claude Code, OpenClaw, or any LLM-powered coding assistant.
 
 ## What It Does
 
 App Surgeon gives your AI coding assistant the ability to:
+- **Diagnose & Fix** app crashes, blank screens, freezes, and bugs with proactive research
 - **Analyze** any installed app's structure (Electron, Python, native, web)
 - **Patch** compiled code to change behavior, branding, or features
 - **Inject** custom UI elements into Electron/web apps
@@ -20,6 +21,33 @@ App Surgeon gives your AI coding assistant the ability to:
 - **Clone** apps via blackbox reverse engineering (no source code needed)
 - **Translate** code between any programming languages locally
 - **Rollback** any change safely with automatic backups
+- **Learn** from every fix — builds a self-evolving knowledge base of solutions
+
+## Key Features
+
+### Proactive Troubleshooting (NEW)
+When an app is broken, App Surgeon doesn't wait for you to find the fix. It:
+1. **Captures crash logs, console output, and process state** automatically
+2. **Searches the web** — forums, GitHub Issues, Stack Overflow, Reddit, YouTube
+3. **Ranks solutions** by community confirmation count (most-confirmed first)
+4. **Applies fixes in escalating order** — config → environment → data → reset → workaround
+5. **Makes fixes permanent** — launcher scripts, plist flags, config files
+6. **Documents everything** so the fix is never rediscovered
+
+### Self-Evolving Learning System (NEW)
+App Surgeon gets smarter over time:
+- **Known Fixes Database** — every successful fix is recorded with symptoms, root cause, and solution
+- **App Profiles** — proactively scans installed apps to build context before issues arise
+- **Pattern Recognition** — if the same fix works across multiple apps, it becomes a general rule
+- **Platform Knowledge** — learns macOS version quirks, architecture issues, Electron bugs
+- **Memory Integration** — persists across sessions via claude-mem and local memory files
+
+### Proactive Web Research
+App Surgeon searches like a human would:
+```
+Official forums → GitHub Issues → Stack Overflow → Reddit → YouTube → X/Twitter
+```
+It ranks solutions by confirmation count and applies the most-confirmed fix first. **You never have to google fixes yourself.**
 
 ## Quick Start
 
@@ -28,8 +56,25 @@ App Surgeon gives your AI coding assistant the ability to:
 # Copy the skill to your Claude Code skills directory
 cp -r skills/app-surgeon ~/.claude/skills/
 
-# Use it
-# In Claude Code, type: /app-surgeon <app-name>
+# Fix a broken app
+# In Claude Code: /app-surgeon fix Obsidian
+
+# Customize an app
+# In Claude Code: /app-surgeon Spotify
+
+# Analyze an app
+# In Claude Code: /app-surgeon analyze Discord
+```
+
+### Commands
+```
+/app-surgeon fix <app-name>       # Diagnose & fix crashes/bugs
+/app-surgeon <app-name>           # Full surgery workflow (customize/modify)
+/app-surgeon analyze <app-name>   # Recon only
+/app-surgeon clone <app-name>     # Blackbox clone/rebuild
+/app-surgeon rollback <app-name>  # Restore from backup
+/app-surgeon scan-apps            # Proactively profile all installed apps
+/app-surgeon install-tools        # Install CLI toolbox
 ```
 
 ### As an MCP Server (works with any MCP client)
@@ -53,13 +98,60 @@ python tools/code-translate.py --cli -s input.py -l rust
 python tools/code-translate.py --cli -s idea.txt -l python --allfile
 ```
 
+## Troubleshooting Workflow
+
+When invoked with `fix`, App Surgeon follows this escalating cascade:
+
+```
+Level 1: CONFIG FIXES (zero risk)
+├── Disable community plugins / extensions
+├── Reset workspace/window state files
+├── Set Electron flags (--disable-gpu, --no-sandbox)
+├── Clear app caches
+└── Remove stale update files
+
+Level 2: ENVIRONMENT FIXES (low risk)
+├── Force Rosetta mode for ARM64 issues
+├── Update/downgrade app version
+├── Fix file permissions
+└── Remove problematic symlinks
+
+Level 3: DATA FIXES (moderate risk)
+├── Reduce data volume
+├── Create lightweight proxy vaults/configs
+├── Remove corrupted data files
+└── Rebuild indexes/databases
+
+Level 4: RESET (backup first)
+├── Reset app config folder
+├── Delete Application Support data
+└── Fresh reinstall
+
+Level 5: WORKAROUNDS
+├── Run under Rosetta permanently
+├── Pin to older working version
+├── Create launcher script with special flags
+└── File upstream bug report
+```
+
+## Known Fixes Database
+
+| App | Issue | Platform | Fix |
+|-----|-------|----------|-----|
+| Obsidian 1.12.7 | Blank screen after indexing | macOS 26.4 ARM64 | Rosetta + `--disable-gpu` + proxy vault |
+| Electron apps | Blank/black window | macOS 26+ | `--disable-gpu` in `user-flags.json` |
+| Electron apps | Stale update crash loop | any | Delete `<app>-*.asar` from Application Support |
+| Obsidian | Plugin causes crash | any | `echo '[]' > .obsidian/community-plugins.json` |
+
+*This table grows automatically as App Surgeon fixes more apps.*
+
 ## Architecture
 
 ```
 app-surgeon/
 ├── skills/
 │   └── app-surgeon/
-│       └── SKILL.md          # Claude Code skill definition
+│       └── SKILL.md          # Claude Code skill (troubleshooting + surgery + learning)
 ├── servers/
 │   ├── code-translate-server.py  # MCP server: code translation
 │   └── app-analysis-server.py    # MCP server: app recon & analysis
@@ -70,12 +162,18 @@ app-surgeon/
 │   ├── ollama.py             # Local Ollama connector (default)
 │   ├── openai_compat.py      # OpenAI-compatible API connector
 │   └── anthropic.py          # Anthropic API connector
-├── examples/
-│   ├── electron-rebrand/     # Example: rebrand an Electron app
-│   ├── add-tts-toggle/       # Example: inject TTS provider toggle
-│   └── personality-patch/    # Example: replace AI assistant persona
 └── README.md
 ```
+
+## Supported App Types
+
+| App Type | Analysis | Fixing | Code Patching | UI Injection | Config Override |
+|----------|----------|--------|---------------|--------------|-----------------|
+| Electron (React/Vue/Svelte) | Full | Full | Yes (main.cjs) | Yes (webContents) | Yes |
+| Python (Flask/Django/CLI) | Full | Full | Yes (direct) | Yes (templates) | Yes |
+| Node.js (Express/Next.js) | Full | Full | Yes (direct) | Yes (templates) | Yes |
+| Native macOS (Swift) | Partial | Partial | No (binary) | No | Yes (plists/configs) |
+| Web Apps (browser) | Full | Partial | Via extension | Via userscript | Via extension |
 
 ## LLM Provider Configuration
 
@@ -105,33 +203,21 @@ export CODE_TRANSLATE_API_KEY=sk-or-...
 export CODE_TRANSLATE_MODEL=meta-llama/llama-3.1-70b
 ```
 
-## Supported App Types
-
-| App Type | Analysis | Code Patching | UI Injection | Config Override |
-|----------|----------|---------------|--------------|-----------------|
-| Electron (React/Vue/Svelte) | Full | Yes (main.cjs) | Yes (webContents) | Yes |
-| Python (Flask/Django/CLI) | Full | Yes (direct) | Yes (templates) | Yes |
-| Node.js (Express/Next.js) | Full | Yes (direct) | Yes (templates) | Yes |
-| Native macOS (Swift) | Partial | No (binary) | No | Yes (plists/configs) |
-| Web Apps (browser) | Full | Via extension | Via userscript | Via extension |
-
 ## Code Translation
 
 Translate between **30+ programming languages** locally:
 
 ```bash
-# Python → Rust
+# Python to Rust
 python tools/code-translate.py --cli -s app.py -l rust
 
-# JavaScript → Go
+# JavaScript to Go
 python tools/code-translate.py --cli -s server.js -l go
 
-# English → Python (natural language to code)
+# English to Python (natural language to code)
 echo "A web server that serves files from ./public on port 8080" > idea.txt
 python tools/code-translate.py --cli -s idea.txt -l python --allfile
 ```
-
-Supported: Python, JavaScript, TypeScript, Rust, Go, Java, C, C++, C#, Ruby, PHP, Swift, Kotlin, Scala, R, Bash, PowerShell, SQL, HTML, CSS, Lua, Perl, Haskell, Elixir, Dart, and more.
 
 ## Blackbox Reverse Engineering
 
@@ -153,38 +239,15 @@ App Surgeon integrates with these tools:
 - **[ReverserAI](https://github.com/mrphrazer/reverser_ai)** — Binary reverse engineering with local LLMs
 - **[AI Code Translator](https://github.com/mckaywrigley/ai-code-translator)** — Cross-language translation UI
 
-## Examples
-
-### Rebrand an Electron App
-```python
-# Replace "App Name" with "My Custom App" in compiled code
-python tools/app-patcher.py \
-  --app "/Applications/SomeApp.app" \
-  --find "Original App Name" \
-  --replace "My Custom App"
-```
-
-### Inject a Custom UI Widget
-```python
-# Add a floating settings toggle to any Electron app
-python tools/app-patcher.py \
-  --app "/Applications/SomeApp.app" \
-  --inject-ui "examples/add-tts-toggle/widget.js"
-```
-
-### Translate an Entire Codebase
-```bash
-# Translate all Python files in a project to Rust
-find ./src -name "*.py" -exec \
-  python tools/code-translate.py --cli -s {} -l rust -o {}.rs \;
-```
-
 ## Safety
 
 - **Automatic backups** before every modification
+- **Escalating fix cascade** — least destructive first
+- **Proactive research** — searches for confirmed solutions before trying random fixes
 - **Rollback** with a single command
 - **Verification** step after every patch
 - **No destructive operations** without explicit confirmation
+- **Memory persistence** — fixes are never rediscovered from scratch
 
 ## Contributing
 
