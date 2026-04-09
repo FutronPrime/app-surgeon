@@ -3,7 +3,7 @@
 </p>
 
 <h1 align="center">App Surgeon</h1>
-<p align="center"><strong>by FUTRON Prime</strong></p>
+<p align="center"><strong>by ☰ FutЯøn ☰</strong></p>
 
 <p align="center">Reverse-engineer, customize, and add features to any installed application.</p>
 
@@ -196,4 +196,4 @@ Apache 2.0 — use it however you want.
 
 ---
 
-Built by [FUTRON Prime](https://github.com/futron-prime) | Powered by open-source AI
+Built by [☰ FutЯøn ☰](https://github.com/FutronPrime) | [Futron Industries](https://futronindustries.com)

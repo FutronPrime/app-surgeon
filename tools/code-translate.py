@@ -19,7 +19,7 @@ import urllib.request
 # ── LLM Connector (LLM-agnostic) ─────────────────────────────────
 
 OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://127.0.0.1:11434")
-MODEL = os.environ.get("CODE_TRANSLATE_MODEL", "avani-uncensored-v4")
+MODEL = os.environ.get("CODE_TRANSLATE_MODEL", "llama3.1")
 
 # Supported providers: ollama (default), openai, anthropic, any OpenAI-compatible
 PROVIDER = os.environ.get("CODE_TRANSLATE_PROVIDER", "ollama")
